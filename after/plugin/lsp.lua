@@ -2,9 +2,6 @@ local Remap = require("culda.keymap")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
 
-local sumneko_root_path = "/home/culda/personal/lua-language-server"
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-
 -- Setup nvim-cmp.
 local cmp = require("cmp")
 local source_mapping = {
@@ -133,8 +130,15 @@ require("lspconfig").gopls.setup(config({
 				unusedparams = true,
 			},
 			staticcheck = true,
+			-- Enable auto-imports
+			completeUnimported = true,
+			usePlaceholders = true,
 		},
 	},
+  on_attach = function(client)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
 }))
 
 -- who even uses this?

@@ -1,4 +1,5 @@
 require('culda.set')
+require('culda.auto')
 
 -- Bootstrap Packer
 local ensure_packer = function()
@@ -29,7 +30,7 @@ require('packer').startup(function(use)
   -- Fuzzy finder
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires =  {'nvim-lua/plenary.nvim'}
   }
 
   -- Syntax highlighting
@@ -51,6 +52,29 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use("tzachar/cmp-tabnine", { run = "./install.sh", requires = 'hrsh7th/nvim-cmp' })
+
+  -- Go
+  use 'ray-x/go.nvim'
+  use 'ray-x/guihua.lua' -- recommended if need floating window support
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    -- config = function()
+    --     local null_ls = require("null-ls")
+    --     null_ls.setup({
+    --       sources = {
+    --         -- null_ls.builtins.formatting.gofumpt,
+    --         null_ls.builtins.formatting.goimports,
+    --         null_ls.builtins.diagnostics.golangci_lint,
+    --       },
+    --       debug = true,
+    --       on_attach = function(client)
+    --           print("null-ls attached")
+    --           print("null-ls formatting capability:", client.server_capabilities.documentFormattingProvider)
+    --       end,
+    --     })
+    -- end,
+    requires = { "nvim-lua/plenary.nvim" },
+  })
 
 
   -- LSP
@@ -90,6 +114,7 @@ require('nvim-tree').setup()
 
 require('telescope').setup()
 
+require('go').setup()
 
 require('lualine').setup()
 
@@ -101,17 +126,41 @@ require('nvim-autopairs').setup()
 
 require('ibl').setup()
 
+require('culda.llm.llm').setup({
+    -- How long to wait for the request to start returning data.
+    timeout_ms = 10000,
+    services = {
+        -- Supported services configured by default
+        -- groq = {
+        --     url = "https://api.groq.com/openai/v1/chat/completions",
+        --     model = "llama3-70b-8192",
+        --     api_key_name = "GROQ_API_KEY",
+        -- },
+        openai = {
+            url = "https://api.openai.com/v1/chat/completions",
+            model = "gpt-4o",
+            api_key_name = "OPENAI_API_KEY",
+        }
+        -- anthropic = {
+        --     url = "https://api.anthropic.com/v1/messages",
+        --     model = "claude-3-5-sonnet-20240620",
+        --     api_key_name = "ANTHROPIC_API_KEY",
+        -- },
+
+        -- Extra OpenAI-compatible services to add (optional)
+        -- other_provider = {
+        --     url = "https://example.com/other-provider/v1/chat/completions",
+        --     model = "llama3",
+        --     api_key_name = "OTHER_PROVIDER_API_KEY",
+        -- }
+    }
+})
+
 -- Color scheme
 vim.cmd[[colorscheme tokyonight]]
 
 -- Key mappings
 vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
-
--- local builtin = require('telescope.builtin')
--- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
--- vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
--- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
--- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- Basic settings
 vim.o.number = true
