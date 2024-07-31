@@ -5,16 +5,15 @@ local inoremap = Remap.inoremap
 local xnoremap = Remap.xnoremap
 local nmap = Remap.nmap
 
+nnoremap("<leader>ng", ':Neogit<CR>', { noremap = true, silent = true })
+nnoremap("<leader>gd", ':DiffviewOpen<CR>')
+nnoremap("<leader>gq", ':DiffviewClose<CR>')
+
 nnoremap("<leader>pv", ":Ex<CR>")
-nnoremap("<leader>u", ":UndotreeShow<CR>")
 
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
 
-nnoremap("Y", "yg$")
-nnoremap("n", "nzzzv")
-nnoremap("N", "Nzzzv")
-nnoremap("J", "mzJ`z")
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
 nnoremap("<leader>vwm", function()
@@ -54,12 +53,3 @@ nnoremap("<leader>j", "<cmd>lprev<CR>zz")
 nnoremap("<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-nnoremap("<leader>tc", function()
-    tail.reset()
-    tmux.reset()
-end);
-
-nnoremap("<leader>ta", function()
-    tail.reset()
-    tmux.reset()
-end);

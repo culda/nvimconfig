@@ -83,6 +83,12 @@ require('packer').startup(function(use)
 
   -- Git integration
   use 'lewis6991/gitsigns.nvim'
+  use({
+    "TimUntersberger/neogit",
+    requires = {
+      "sindrets/diffview.nvim"
+    }
+  })
 
   -- Status line
   use {
@@ -119,6 +125,12 @@ require('go').setup()
 require('lualine').setup()
 
 require('gitsigns').setup()
+
+require('neogit').setup({
+  integrations = {
+    diffview = true
+  }
+})
 
 require('Comment').setup()
 
@@ -161,6 +173,7 @@ vim.cmd[[colorscheme tokyonight]]
 
 -- Key mappings
 vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeFindFile<CR>', {noremap = true, silent = true})
 
 -- Basic settings
 vim.o.number = true

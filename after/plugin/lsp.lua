@@ -101,7 +101,8 @@ local function config(_config)
                 end,
                 apply = true
             }) end)
-			nnoremap("<leader>vrr", function() vim.lsp.buf.references() end)
+			-- nnoremap("<leader>vrr", function() vim.lsp.buf.references() end)
+			nnoremap("<C-i>", function() vim.lsp.buf.references() end)
 			nnoremap("<leader>vrn", function() vim.lsp.buf.rename() end)
 			inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
 		end,
@@ -124,21 +125,23 @@ require("lspconfig").cssls.setup(config())
 
 require("lspconfig").gopls.setup(config({
 	cmd = { "gopls", "serve" },
-	settings = {
-		gopls = {
-			analyses = {
-				unusedparams = true,
-			},
-			staticcheck = true,
-			-- Enable auto-imports
-			completeUnimported = true,
-			usePlaceholders = true,
-		},
-	},
-  on_attach = function(client)
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-  end,
+  settings = {
+      gopls = {
+          analyses = {
+              unusedparams = true,
+          },
+          staticcheck = true,
+          -- Disable built-in formatting to avoid conflicts with null-ls
+          gofumpt = false,
+          -- Keep these if you want gopls to suggest imports, but null-ls to apply them
+          completeUnimported = true,
+          usePlaceholders = true,
+      },
+  },
+  -- on_attach = function(client)
+  --   client.server_capabilities.documentFormattingProvider = false
+  --   client.server_capabilities.documentRangeFormattingProvider = false
+  -- end,
 }))
 
 -- who even uses this?
