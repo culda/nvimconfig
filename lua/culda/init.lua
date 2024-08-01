@@ -41,7 +41,13 @@ require('packer').startup(function(use)
         ts_update()
     end,
   }
-  use("glepnir/lspsaga.nvim")
+  use ({
+      'nvimdev/lspsaga.nvim',
+      after = 'nvim-lspconfig',
+      config = function()
+          require('lspsaga').setup({})
+      end,
+  })
   use("romgrk/nvim-treesitter-context")
   use("simrat39/symbols-outline.nvim")
 

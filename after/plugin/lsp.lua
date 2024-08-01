@@ -82,8 +82,9 @@ tabnine:setup({
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		on_attach = function()
-			nnoremap("gd", function() vim.lsp.buf.definition() end)
+		on_attach = function(_,bufnr)
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
+      nnoremap("gd", function() vim.lsp.buf.definition() end)
 			nnoremap("K", function() vim.lsp.buf.hover() end)
 			nnoremap("<leader>vws", function() vim.lsp.buf.workspace_symbol() end)
 			nnoremap("<leader>vd", function() vim.diagnostic.open_float() end)
@@ -101,7 +102,6 @@ local function config(_config)
                 end,
                 apply = true
             }) end)
-			-- nnoremap("<leader>vrr", function() vim.lsp.buf.references() end)
 			nnoremap("<C-i>", function() vim.lsp.buf.references() end)
 			nnoremap("<leader>vrn", function() vim.lsp.buf.rename() end)
 			inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
@@ -136,10 +136,10 @@ require("lspconfig").gopls.setup(config({
           usePlaceholders = true,
       },
   },
-  on_attach = function(_,bufnr)
-    print("attached")
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
-  end,
+  -- on_attach = function(_,bufnr)
+  --   print("attached")
+  --   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
+  -- end,
 }))
 
 -- who even uses this?
