@@ -131,17 +131,15 @@ require("lspconfig").gopls.setup(config({
               unusedparams = true,
           },
           staticcheck = true,
-          -- Disable built-in formatting to avoid conflicts with null-ls
           gofumpt = false,
-          -- Keep these if you want gopls to suggest imports, but null-ls to apply them
           completeUnimported = true,
           usePlaceholders = true,
       },
   },
-  -- on_attach = function(client)
-  --   client.server_capabilities.documentFormattingProvider = false
-  --   client.server_capabilities.documentRangeFormattingProvider = false
-  -- end,
+  on_attach = function(_,bufnr)
+    print("attached")
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
+  end,
 }))
 
 -- who even uses this?

@@ -56,25 +56,25 @@ require('packer').startup(function(use)
   -- Go
   use 'ray-x/go.nvim'
   use 'ray-x/guihua.lua' -- recommended if need floating window support
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
-    -- config = function()
-    --     local null_ls = require("null-ls")
-    --     null_ls.setup({
-    --       sources = {
-    --         -- null_ls.builtins.formatting.gofumpt,
-    --         null_ls.builtins.formatting.goimports,
-    --         null_ls.builtins.diagnostics.golangci_lint,
-    --       },
-    --       debug = true,
-    --       on_attach = function(client)
-    --           print("null-ls attached")
-    --           print("null-ls formatting capability:", client.server_capabilities.documentFormattingProvider)
-    --       end,
-    --     })
-    -- end,
-    requires = { "nvim-lua/plenary.nvim" },
-  })
+  -- use({
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   -- config = function()
+  --   --     local null_ls = require("null-ls")
+  --   --     null_ls.setup({
+  --   --       sources = {
+  --   --         -- null_ls.builtins.formatting.gofumpt,
+  --   --         null_ls.builtins.formatting.goimports,
+  --   --         null_ls.builtins.diagnostics.golangci_lint,
+  --   --       },
+  --   --       debug = true,
+  --   --       on_attach = function(client)
+  --   --           print("null-ls attached")
+  --   --           print("null-ls formatting capability:", client.server_capabilities.documentFormattingProvider)
+  --   --       end,
+  --   --     })
+  --   -- end,
+  --   requires = { "nvim-lua/plenary.nvim" },
+  -- })
 
 
   -- LSP
@@ -120,8 +120,6 @@ require('nvim-tree').setup()
 
 require('telescope').setup()
 
-require('go').setup()
-
 require('lualine').setup()
 
 require('gitsigns').setup()
@@ -137,6 +135,8 @@ require('Comment').setup()
 require('nvim-autopairs').setup()
 
 require('ibl').setup()
+
+require('go').setup()
 
 require('culda.llm.llm').setup({
     -- How long to wait for the request to start returning data.
