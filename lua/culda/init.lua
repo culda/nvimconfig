@@ -124,7 +124,15 @@ end)
 -- Plugin configurations
 require('nvim-tree').setup()
 
-require('telescope').setup()
+require('telescope').setup({
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-d>"] = "delete_buffer",
+      },
+    },
+  },
+})
 
 require('lualine').setup()
 
