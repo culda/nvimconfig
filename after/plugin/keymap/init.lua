@@ -5,9 +5,10 @@ local inoremap = Remap.inoremap
 local xnoremap = Remap.xnoremap
 local nmap = Remap.nmap
 
-nnoremap("<leader>ng", ':Neogit<CR>', { noremap = true, silent = true })
-nnoremap("<leader>gd", ':DiffviewOpen<CR>')
-nnoremap("<leader>gq", ':DiffviewClose<CR>')
+nnoremap("<leader>ng", '<cmd>Neogit<CR>', { noremap = true, silent = true })
+nnoremap("<leader>gd", '<cmd>DiffviewOpen<CR>')
+nnoremap("<leader>gq", '<cmd>DiffviewClose<CR>')
+nnoremap("<leader>gdm", '<cmd>DiffviewOpen origin/main -- %')
 
 nnoremap("<leader>pv", ":Ex<CR>")
 
@@ -46,10 +47,4 @@ nnoremap("<leader>j", "<cmd>lprev<CR>zz")
 
 nnoremap("<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
--- telescope stuff
-nnoremap("]q", ':cn<CR>')
-nnoremap("[q", ':cp<CR>')
-nnoremap("[Q", ':cfirst<CR>')
-nnoremap("]Q", ':clast<CR>')
 
