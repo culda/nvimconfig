@@ -16,12 +16,6 @@ vnoremap("K", ":m '<-2<CR>gv=gv")
 
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")
-nnoremap("<leader>vwm", function()
-    require("vim-with-me").StartVimWithMe()
-end)
-nnoremap("<leader>svwm", function()
-    require("vim-with-me").StopVimWithMe()
-end)
 
 -- greatest remap ever
 xnoremap("<leader>p", "\"_dP")
@@ -52,4 +46,10 @@ nnoremap("<leader>j", "<cmd>lprev<CR>zz")
 
 nnoremap("<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+-- telescope stuff
+nnoremap("]q", ':cn<CR>')
+nnoremap("[q", ':cp<CR>')
+nnoremap("[Q", ':cfirst<CR>')
+nnoremap("]Q", ':clast<CR>')
 
