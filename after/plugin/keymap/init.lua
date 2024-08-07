@@ -8,7 +8,7 @@ local nmap = Remap.nmap
 nnoremap("<leader>ng", '<cmd>Neogit<CR>', { noremap = true, silent = true })
 nnoremap("<leader>gd", '<cmd>DiffviewOpen<CR>')
 nnoremap("<leader>gq", '<cmd>DiffviewClose<CR>')
-nnoremap("<leader>gdm", '<cmd>DiffviewOpen origin/main -- %')
+nnoremap("<leader>gdm", '<cmd>DiffviewOpen origin/main -- %<CR>')
 
 nnoremap("<leader>pv", ":Ex<CR>")
 
