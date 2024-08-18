@@ -83,6 +83,7 @@ tabnine:setup({
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
 		on_attach = function(_,bufnr)
+      -- should probably check it's a go file
       vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
       nnoremap("gd", function() vim.lsp.buf.definition() end)
 			nnoremap("K", function() vim.lsp.buf.hover() end)
@@ -131,7 +132,7 @@ require("lspconfig").gopls.setup(config({
               unusedparams = true,
           },
           staticcheck = true,
-          gofumpt = false,
+          gofumpt = true,
           completeUnimported = true,
           usePlaceholders = true,
       },

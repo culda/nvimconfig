@@ -15,7 +15,7 @@ end)
 nnoremap("<leader>pw", function()
     require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }
 end)
-nnoremap("<leader>pb", function()
+nnoremap("<leader>b", function()
     require('telescope.builtin').buffers()
 end)
 nnoremap("<leader>vh", function()
