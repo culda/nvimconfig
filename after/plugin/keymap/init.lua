@@ -12,8 +12,14 @@ nnoremap("<leader>gdm", '<cmd>DiffviewOpen origin/main -- %<CR>')
 
 nnoremap("<leader>pv", ":Ex<CR>")
 
-vnoremap("J", ":m '>+1<CR>gv=gv")
-vnoremap("K", ":m '<-2<CR>gv=gv")
+nnoremap("j", "k")
+nnoremap("k", "j")
+
+vnoremap("j", "k")
+vnoremap("k", "j")
+
+vnoremap("K", ":m '>+1<CR>gv=gv")
+vnoremap("J", ":m '<-2<CR>gv=gv")
 
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("<C-u>", "<C-u>zz")

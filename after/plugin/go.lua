@@ -8,4 +8,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = format_sync_grp,
 })
 
+-- bad
+-- vim.cmd[[autocmd BufWritePost *.go silent! !golangci-lint run %]]
 
