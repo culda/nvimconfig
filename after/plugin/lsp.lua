@@ -230,3 +230,5 @@ null_ls.setup({
     null_ls.builtins.diagnostics.golangci_lint
   },
 })
+
+require('lspsaga').setup({ ui = { enable = false, code_action = "" } })

@@ -190,136 +190,161 @@ local function process_sse_response(buffer, service)
 	end)
 end
 
+-- the prompt function should collect user input first and include in the prompt to the llm
 function M.prompt(opts)
-  print("hello")
-  print(opts)
-	local replace = opts.replace
-	local service = opts.service
-	local all_text = get_lines({ all = true })
-	local prompt = ""
-	local visual_lines = M.get_selection()
-	if visual_lines then
-		prompt = table.concat(visual_lines, "\n")
-		if replace then
-			local selection = prompt
-			prompt = all_text
-				.. "\n============ code to replace from "
-				.. get_buffer_path()
-				.. " ============\n"
-				.. selection
-			vim.api.nvim_command("normal! d")
-			vim.api.nvim_command("normal! k")
-		else
-			local selection = prompt
-			prompt = all_text
-				.. "\n============ answer comments in this snippet from "
-				.. get_buffer_path()
-				.. " ============\n"
-				.. selection
-				.. "\n=======================\n"
-				.. "talk in comments only. do NOT use markdown. remember TALK IN COMMENTS ONLY"
-			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
-		end
-	else
-		prompt = get_lines({ all = false })
-	end
-
-	local url = ""
-	local model = ""
-	local api_key_name = ""
-
-	local found_service = service_lookup[service]
-	if found_service then
-		url = found_service.url
-		api_key_name = found_service.api_key_name
-		model = found_service.model
-	else
-		print("Invalid service: " .. service)
-		return
-	end
-
-	local api_key = api_key_name and get_api_key(api_key_name)
-
-	local data
-	local sys_prompt = replace and system_prompt_replace or system_prompt
-	if print_prompt then
-		print(sys_prompt)
-		print(prompt)
-	end
-
-	if service == "anthropic" then
-		data = {
-			system = sys_prompt,
-			messages = {
-				{
-					role = "user",
-					content = prompt,
-				},
-			},
-			model = model,
-			stream = true,
-			max_tokens = 1024,
-		}
-	else
-		data = {
-			messages = {
-				{
-					role = "system",
-					content = sys_prompt,
-				},
-				{
-					role = "user",
-					content = prompt,
-				},
-			},
-			model = model,
-			temperature = 0.7,
-			stream = true,
-		}
-	end
-
-	local args = {
-		"-N",
-		"-X",
-		"POST",
-		"-H",
-		"Content-Type: application/json",
-		"-d",
-		vim.json.encode(data),
-	}
-
-	if api_key then
-		if service == "anthropic" then
-			table.insert(args, "-H")
-			table.insert(args, "x-api-key: " .. api_key)
-			table.insert(args, "-H")
-			table.insert(args, "anthropic-version: 2023-06-01")
-		else
-			table.insert(args, "-H")
-			table.insert(args, "Authorization: Bearer " .. api_key)
-		end
-	end
-
-	table.insert(args, url)
-	if active_job then
-		active_job:shutdown()
-		active_job = nil
-	end
-
-	active_job = Job:new({
-		command = "curl",
-		args = args,
-		on_stdout = function(_, out)
-			process_sse_response(out, service)
-		end,
-		on_stderr = function(_, _) end,
-		on_exit = function()
-			active_job = nil
-		end,
-	})
-
-	active_job:start()
-	vim.api.nvim_command("normal! o")
+    -- Print options to the console for debugging
+    print(opts)
+    
+    -- Extract parameters from opts
+    local replace = opts.replace
+    local service = opts.service
+    
+    -- Collect all text from the current buffer
+    local all_text = get_lines({ all = true })
+    
+    -- Initialize prompt
+    local prompt = ""
+    
+    -- Get selected lines if any
+    local visual_lines = M.get_selection()
+    
+    if visual_lines then
+        -- Concatenate selected lines into a single string
+        prompt = table.concat(visual_lines, "\n")
+        
+        if replace then
+            local selection = prompt
+            prompt = all_text
+                .. "\n============ code to replace from "
+                .. get_buffer_path()
+                .. " ============\n"
+                .. selection
+            -- Delete the selected lines
+            vim.api.nvim_command("normal! d")
+            vim.api.nvim_command("normal! k")
+        else
+            local selection = prompt
+            prompt = all_text
+                .. "\n============ answer comments in this snippet from "
+                .. get_buffer_path()
+                .. " ============\n"
+                .. selection
+                .. "\n=======================\n"
+                .. "talk in comments only. do NOT use markdown. remember TALK IN COMMENTS ONLY"
+            -- Exit visual mode
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
+        end
+    else
+        -- Collect lines up to the cursor position
+        prompt = get_lines({ all = false })
+    end
+    
+    -- Initialize variables for service details
+    local url = ""
+    local model = ""
+    local api_key_name = ""
+    
+    -- Lookup service details
+    local found_service = service_lookup[service]
+    if found_service then
+        url = found_service.url
+        api_key_name = found_service.api_key_name
+        model = found_service.model
+    else
+        print("Invalid service: " .. service)
+        return
+    end
+    
+    -- Get API key from environment variable
+    local api_key = api_key_name and get_api_key(api_key_name)
+    
+    -- Prepare data payload for the API request
+    local data
+    local sys_prompt = replace and system_prompt_replace or system_prompt
+    if print_prompt then
+        print(sys_prompt)
+        print(prompt)
+    end
+    
+    if service == "anthropic" then
+        data = {
+            system = sys_prompt,
+            messages = {
+                {
+                    role = "user",
+                    content = prompt,
+                },
+            },
+            model = model,
+            stream = true,
+            max_tokens = 1024,
+        }
+    else
+        data = {
+            messages = {
+                {
+                    role = "system",
+                    content = sys_prompt,
+                },
+                {
+                    role = "user",
+                    content = prompt,
+                },
+            },
+            model = model,
+            temperature = 0.7,
+            stream = true,
+        }
+    end
+    
+    -- Prepare curl arguments
+    local args = {
+        "-N",
+        "-X",
+        "POST",
+        "-H",
+        "Content-Type: application/json",
+        "-d",
+        vim.json.encode(data),
+    }
+    
+    if api_key then
+        if service == "anthropic" then
+            table.insert(args, "-H")
+            table.insert(args, "x-api-key: " .. api_key)
+            table.insert(args, "-H")
+            table.insert(args, "anthropic-version: 2023-06-01")
+        else
+            table.insert(args, "-H")
+            table.insert(args, "Authorization: Bearer " .. api_key)
+        end
+    end
+    
+    table.insert(args, url)
+    
+    -- Shutdown any active job
+    if active_job then
+        active_job:shutdown()
+        active_job = nil
+    end
+    
+    -- Start new job to send request
+    active_job = Job:new({
+        command = "curl",
+        args = args,
+        on_stdout = function(_, out)
+            process_sse_response(out, service)
+        end,
+        on_stderr = function(_, _) end,
+        on_exit = function()
+            active_job = nil
+        end,
+    })
+    
+    active_job:start()
+    
+    -- Open a new line in the buffer
+    vim.api.nvim_command("normal! o")
 end
 
 function M.get_selection()
