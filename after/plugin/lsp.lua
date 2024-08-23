@@ -104,7 +104,7 @@ local function config(_config)
           apply = true
         })
       end)
-      nnoremap("<C-i>", function() vim.lsp.buf.references() end)
+      nnoremap("<leader>i", function() vim.lsp.buf.references() end)
       nnoremap("<leader>vrn", function() vim.lsp.buf.rename() end)
       inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
     end,
