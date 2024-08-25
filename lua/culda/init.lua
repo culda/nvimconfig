@@ -55,8 +55,30 @@ require('packer').startup(function(use)
   use("hrsh7th/cmp-buffer")
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
-  use("tzachar/cmp-tabnine", { run = "./install.sh", requires = 'hrsh7th/nvim-cmp' })
-
+  -- use("tzachar/cmp-tabnine", { run = "./install.sh", requires = 'hrsh7th/nvim-cmp' })
+  use {
+    'yetone/avante.nvim',
+    -- event = 'VeryLazy',
+    run = 'make',
+    config = function()
+      -- add any opts here
+    end,
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      'stevearc/dressing.nvim',
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      {
+        'MeanderingProgrammer/render-markdown.nvim',
+        ft = { 'markdown', 'Avante' },
+        config = function()
+          require('render-markdown').setup {
+            file_types = { 'markdown', 'Avante' },
+          }
+        end,
+      },
+    },
+  }
   -- Go
   use 'ray-x/go.nvim'
   use 'ray-x/guihua.lua' -- recommended if need floating window support
@@ -98,7 +120,7 @@ require('packer').startup(function(use)
   -- Status line
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
 
   -- Color scheme

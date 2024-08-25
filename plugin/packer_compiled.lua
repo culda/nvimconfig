@@ -84,6 +84,12 @@ _G.packer_plugins = {
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["avante.nvim"] = {
+    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
+    loaded = true,
+    path = "/home/culda/.local/share/nvim/site/pack/packer/start/avante.nvim",
+    url = "https://github.com/yetone/avante.nvim"
+  },
   catppuccin = {
     loaded = true,
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/catppuccin",
@@ -99,11 +105,6 @@ _G.packer_plugins = {
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
-  ["cmp-tabnine"] = {
-    loaded = true,
-    path = "/home/culda/.local/share/nvim/site/pack/packer/start/cmp-tabnine",
-    url = "https://github.com/tzachar/cmp-tabnine"
-  },
   cmp_luasnip = {
     loaded = true,
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
@@ -113,6 +114,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/diffview.nvim",
     url = "https://github.com/sindrets/diffview.nvim"
+  },
+  ["dressing.nvim"] = {
+    loaded = true,
+    path = "/home/culda/.local/share/nvim/site/pack/packer/start/dressing.nvim",
+    url = "https://github.com/stevearc/dressing.nvim"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -159,6 +165,11 @@ _G.packer_plugins = {
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/none-ls.nvim",
     url = "https://github.com/nvimtools/none-ls.nvim"
   },
+  ["nui.nvim"] = {
+    loaded = true,
+    path = "/home/culda/.local/share/nvim/site/pack/packer/start/nui.nvim",
+    url = "https://github.com/MunifTanjim/nui.nvim"
+  },
   ["nvim-autopairs"] = {
     loaded = true,
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
@@ -204,6 +215,14 @@ _G.packer_plugins = {
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["render-markdown.nvim"] = {
+    config = { "\27LJ\2\nw\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\15file_types\1\0\1\15file_types\0\1\3\0\0\rmarkdown\vAvante\nsetup\20render-markdown\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/culda/.local/share/nvim/site/pack/packer/opt/render-markdown.nvim",
+    url = "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+  },
   ["rose-pine"] = {
     loaded = true,
     path = "/home/culda/.local/share/nvim/site/pack/packer/start/rose-pine",
@@ -227,6 +246,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: avante.nvim
+time([[Config for avante.nvim]], true)
+try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "avante.nvim")
+time([[Config for avante.nvim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType Avante ++once lua require("packer.load")({'render-markdown.nvim'}, { ft = "Avante" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'render-markdown.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
