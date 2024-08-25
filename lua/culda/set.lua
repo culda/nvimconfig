@@ -43,7 +43,3 @@ vim.opt.clipboard = "unnamedplus"
 
 -- vim.opt.colorcolumn = "80"
 
-vim.g.mapleader = " "
-
--- Color scheme
-vim.cmd [[colorscheme tokyonight]]
