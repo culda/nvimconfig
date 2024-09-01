@@ -78,10 +78,13 @@ cmp.setup({
 
 local function config(_config)
     return vim.tbl_deep_extend("force", {
-        on_attach = function(_, bufnr)
-            -- should probably check it's a go file
-            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>',
-                { noremap = true, silent = true })
+        on_attach = function(client, bufnr)
+            -- Add Go-specific keybinding only for Go files
+            if client.name == "gopls" then
+                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>',
+                    { noremap = true, silent = true })
+            end
+
             nnoremap("gd", function() vim.lsp.buf.definition() end)
             nnoremap("K", function() vim.lsp.buf.hover() end)
             nnoremap("<leader>vws", function() vim.lsp.buf.workspace_symbol() end)
@@ -108,13 +111,19 @@ local function config(_config)
     }, _config or {})
 end
 
+require("mason").setup {}
+
+require("mason-lspconfig").setup { ensure_installed = { "pyright", }, }
+
+require("lspconfig").pyright.setup(config())
+
 require("lspconfig").zls.setup(config())
 
 require("lspconfig").tsserver.setup(config())
 
 require("lspconfig").ccls.setup(config())
 
-require("lspconfig").jedi_language_server.setup(config())
+-- require("lspconfig").jedi_language_server.setup(config())
 
 require("lspconfig").svelte.setup(config())
 
@@ -135,10 +144,6 @@ require("lspconfig").gopls.setup(config({
             usePlaceholders = true,
         },
     },
-    -- on_attach = function(_,bufnr)
-    --   print("attached")
-    --   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>', { noremap = true, silent = true })
-    -- end,
 }))
 
 -- who even uses this?
