@@ -113,13 +113,22 @@ end
 
 require("mason").setup {}
 
-require("mason-lspconfig").setup { ensure_installed = { "pyright", }, }
+require("mason-lspconfig").setup { ensure_installed = { "pyright", "eslint" }, }
 
 require("lspconfig").pyright.setup(config())
 
 require("lspconfig").zls.setup(config())
 
-require("lspconfig").tsserver.setup(config())
+require("lspconfig").ts_ls.setup(config())
+
+require("lspconfig").eslint.setup(config({
+    settings = {
+        codeActionOnSave = {
+            enable = true,
+            mode = "all"
+        },
+    }
+}))
 
 require("lspconfig").ccls.setup(config())
 
@@ -226,12 +235,20 @@ require("luasnip.loaders.from_vscode").lazy_load({
     exclude = {},
 })
 
+require("mason-null-ls").setup({
+    ensure_installed = { "black", "eslint" }
+})
+
 local null_ls = require("null-ls")
 
 null_ls.setup({
     sources = {
-        null_ls.builtins.diagnostics.golangci_lint
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.formatting.black,
+        -- null_ls.builtins.code_actions.eslint_d,
+        -- null_ls.builtins.code_actions.eslint
     },
 })
 
+-- cleras the lightbulb
 require('lspsaga').setup({ ui = { enable = false, code_action = "" } })
