@@ -130,6 +130,8 @@ require("lspconfig").eslint.setup(config({
     }
 }))
 
+require("lspconfig").jsonls.setup(config())
+
 require("lspconfig").ccls.setup(config())
 
 -- require("lspconfig").jedi_language_server.setup(config())

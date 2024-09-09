@@ -5,6 +5,7 @@ local inoremap = Remap.inoremap
 local xnoremap = Remap.xnoremap
 local nmap = Remap.nmap
 
+nnoremap("<leader>gb", '<cmd>BlameToggle<CR>')
 nnoremap("<leader>ng", '<cmd>Neogit<CR>', { noremap = true, silent = true })
 nnoremap("<leader>gd", '<cmd>DiffviewOpen<CR>')
 nnoremap("<leader>gq", '<cmd>DiffviewClose<CR>')
