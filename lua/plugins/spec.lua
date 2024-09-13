@@ -77,6 +77,14 @@ return {
     lazy = false,
   },
   {
+    'hrsh7th/cmp-path',
+    lazy = false,
+  },
+  {
+    'hrsh7th/cmp-cmdline',
+    lazy = false,
+  },
+  {
     'L3MON4D3/LuaSnip',
     lazy = false,
   },

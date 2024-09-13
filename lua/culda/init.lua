@@ -46,6 +46,9 @@ require('ibl').setup()
 
 require('go').setup()
 
+require('avante').setup({
+  auto_suggestions_provider = "copilot",
+})
 
 require('culda.llm.llm').setup({
   -- How long to wait for the request to start returning data.
