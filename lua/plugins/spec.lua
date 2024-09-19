@@ -31,12 +31,21 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    -- config = function()
-    --   require('nvim-treesitter.configs').setup {
-    --     ensure_installed = "all",
-    --     -- other settings...
-    --   }
-    -- end,
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = "all",
+        sync_install = false,
+
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+      }
+    end,
+  },
+  {
+    'romgrk/nvim-treesitter-context',
+    lazy = false,
   },
   {
     "HakonHarnes/img-clip.nvim",
@@ -52,10 +61,6 @@ return {
   },
   {
     'nvimdev/lspsaga.nvim',
-    lazy = false,
-  },
-  {
-    'romgrk/nvim-treesitter-context',
     lazy = false,
   },
   {
@@ -111,7 +116,7 @@ return {
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      "zbirenbaum/copilot.lua",      -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
