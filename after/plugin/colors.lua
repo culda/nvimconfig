@@ -9,8 +9,6 @@ function ColorMyPencils()
     vim.g.gruvbox_invert_selection = '0'
     vim.opt.background = "dark"
 
-    --vim.cmd(":colorscheme rose-pine")
-
     local hl = function(thing, opts)
         vim.api.nvim_set_hl(0, thing, opts)
     end

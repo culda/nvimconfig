@@ -2,21 +2,16 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 require("culda.lazy")
-
--- Color scheme
--- vim.cmd [[colorscheme tokyonight]]
-
 require('culda.set')
-require('culda.auto')
 
 -- Plugin configurations
-require('nvim-tree').setup(
-  {
-    git = {
-      ignore = false, -- This will show git-ignored files
-    },
-  }
-)
+-- require('nvim-tree').setup(
+--   {
+--     git = {
+--       ignore = false, -- This will show git-ignored files
+--     },
+--   }
+-- )
 
 require('telescope').setup({
   defaults = {
