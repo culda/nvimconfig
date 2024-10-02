@@ -1,6 +1,6 @@
 vim.opt.guicursor = ""
 
-vim.opt.nu = true
+vim.opt.number = false
 vim.opt.relativenumber = true
 
 vim.opt.errorbells = false
@@ -42,4 +42,3 @@ vim.opt.shortmess:append("c")
 vim.opt.clipboard = "unnamedplus"
 
 -- vim.opt.colorcolumn = "80"
-
