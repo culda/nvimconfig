@@ -1,5 +1,5 @@
 return {
-{
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -8,7 +8,7 @@ return {
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
-},
+  },
   -- {
   --   'nvim-tree/nvim-tree.lua',
   --   dependencies = {
@@ -114,6 +114,12 @@ return {
   --   lazy = false,
   -- },
   {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({})
+    end,
+  },
+  {
     "yetone/avante.nvim",
     event = "VeryLazy",
     build = "make",
@@ -126,7 +132,7 @@ return {
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",      -- for providers='copilot'
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
