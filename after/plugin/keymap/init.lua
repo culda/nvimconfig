@@ -12,6 +12,7 @@ nnoremap("<leader>gq", '<cmd>DiffviewClose<CR>')
 nnoremap("<leader>gdm", '<cmd>DiffviewOpen origin/main -- %<CR>')
 nnoremap('<C-n>', ':Neotree filesystem right<CR>', { silent = true })
 nnoremap('<C-l>', ':Neotree reveal filesystem right<CR>', { silent = true })
+nnoremap('<C-h>', ':Neotree toggle<CR>', { silent = true })
 nnoremap('<C-b>', ':Neotree buffers<CR>', { silent = true })
 
 nnoremap("<leader>pv", ":Ex<CR>")
