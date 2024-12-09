@@ -124,7 +124,6 @@ return {
     event = "VeryLazy",
     build = "make",
     opts = {
-      -- add any opts here
     },
     dependencies = {
       "stevearc/dressing.nvim",

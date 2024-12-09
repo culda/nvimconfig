@@ -42,7 +42,7 @@ require('ibl').setup()
 require('go').setup()
 
 require('avante').setup({
-  auto_suggestions_provider = "copilot",
+  provider = "openai"
 })
 
 require('culda.llm.llm').setup({
