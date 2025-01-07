@@ -270,9 +270,6 @@ function M.prompt(opts)
     print(prompt)
   end
 
-  print(sys_prompt)
-  print(prompt)
-
   if service == "anthropic" then
     data = {
       system = sys_prompt,
