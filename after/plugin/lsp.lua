@@ -78,14 +78,7 @@ cmp.setup({
 
 local function config(_config)
   return vim.tbl_deep_extend("force", {
-    on_attach = function(client, bufnr)
-      -- Add Go-specific keybinding only for Go files
-      if client.name == "gopls" then
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>',
-          { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>got', ':vert copen 40<CR>', { noremap = true, silent = true })
-      end
-
+    on_attach = function()
       nnoremap("gd", function() vim.lsp.buf.definition() end)
       nnoremap("gD", function() vim.lsp.buf.declaration() end)
       nnoremap("K", function() vim.lsp.buf.hover() end)
@@ -94,7 +87,8 @@ local function config(_config)
       nnoremap("[d", function() vim.diagnostic.goto_next() end)
       nnoremap("]d", function() vim.diagnostic.goto_prev() end)
       nnoremap("<leader>ca", function() vim.lsp.buf.code_action() end)
-      nnoremap("<leader>co", function() vim.lsp.buf.code_action({
+      nnoremap("<leader>co", function()
+        vim.lsp.buf.code_action({
           filter = function(code_action)
             if not code_action or not code_action.data then
               return false
@@ -121,7 +115,13 @@ require("lspconfig").pyright.setup(config())
 
 require("lspconfig").zls.setup(config())
 
-require("lspconfig").ts_ls.setup(config())
+require("lspconfig").ts_ls.setup(config({
+  init_options = {
+    preferences = {
+      importModuleSpecifierPreference = 'non-relative',
+    }
+  },
+}))
 
 require("lspconfig").eslint.setup(config({
   settings = {
@@ -157,6 +157,15 @@ require("lspconfig").gopls.setup(config({
       usePlaceholders = true,
     },
   },
+  on_attach = function(_,bufnr)
+    -- Call the local on_attach logic
+    config().on_attach()
+
+    -- Add Go-specific keybinding only for Go files
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>got', ':GoTestFile -v <CR>',
+      { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>got', ':vert copen 40<CR>', { noremap = true, silent = true })
+  end,
 }))
 
 -- who even uses this?
