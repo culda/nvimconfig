@@ -24,19 +24,15 @@ return {
   {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
   },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-    },
-    -- config = function()
-    --     require("your.null-ls.config") -- require your null-ls config here (example below)
-    -- end,
-  },
+  -- {
+  --   "jay-babu/mason-null-ls.nvim",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = {
+  --     "williamboman/mason.nvim",
+  --     "nvimtools/none-ls.nvim",
+  --   },
+  -- },
   -- Syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
@@ -131,7 +127,7 @@ return {
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      "zbirenbaum/copilot.lua",      -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -176,16 +172,23 @@ return {
     dependencies = {
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
+      "williamboman/mason.nvim",
+      "creativenull/efmls-configs-nvim",
     },
+  },
+  {
+    'creativenull/efmls-configs-nvim',
+    version = 'v1.x.x', -- version is optional, but recommended
+    dependencies = { 'neovim/nvim-lspconfig' },
   },
   {
     'onsails/lspkind-nvim',
     lazy = false,
   },
-  {
-    'nvimtools/none-ls.nvim',
-    lazy = false,
-  },
+  -- {
+  --   'nvimtools/none-ls.nvim',
+  --   lazy = false,
+  -- },
 
   -- Git integration
   {

@@ -1,4 +1,5 @@
 local Remap = require("culda.keymap")
+local lspconfig = require("lspconfig")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
 
@@ -109,13 +110,23 @@ end
 
 require("mason").setup {}
 
-require("mason-lspconfig").setup { ensure_installed = { "pyright", "eslint" }, }
+require("mason-lspconfig").setup {
+  ensure_installed = {
+    "pyright",
+    "eslint",
+    "solidity",
+    "solidity_ls",
+    "efm",
+    "jsonls"
+  },
+  automatic_installation = true,
+}
 
-require("lspconfig").pyright.setup(config())
+lspconfig.pyright.setup(config())
 
-require("lspconfig").zls.setup(config())
+lspconfig.zls.setup(config())
 
-require("lspconfig").ts_ls.setup(config({
+lspconfig.ts_ls.setup(config({
   init_options = {
     preferences = {
       importModuleSpecifierPreference = 'non-relative',
@@ -123,7 +134,7 @@ require("lspconfig").ts_ls.setup(config({
   },
 }))
 
-require("lspconfig").eslint.setup(config({
+lspconfig.eslint.setup(config({
   settings = {
     codeActionOnSave = {
       enable = true,
@@ -132,19 +143,45 @@ require("lspconfig").eslint.setup(config({
   }
 }))
 
-require("lspconfig").jsonls.setup(config())
+lspconfig.jsonls.setup(config())
 
-require("lspconfig").ccls.setup(config())
+lspconfig.ccls.setup(config())
 
 -- require("lspconfig").jedi_language_server.setup(config())
 
-require("lspconfig").svelte.setup(config())
+lspconfig.svelte.setup(config())
 
-require("lspconfig").solang.setup(config())
+-- lspconfig.solang.setup(config({
+--   filetypes = { "solidity" },
+--   -- cmd = { "vscode-solidity-server", "--stdio" },
+--   root_dir = require("lspconfig.util").root_pattern("foundry.toml", ".git"),
+--   settings = {
+--     solang = {
+--       importmap = {
+--         ["@openzeppelin"] = "lib/openzeppelin-contracts/contracts"
+--       }
+--     }
+--   }
+-- }))
 
-require("lspconfig").cssls.setup(config())
+lspconfig.solidity.setup(config({
+  filetypes = { "solidity" },
+  cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+  root_dir = require("lspconfig.util").root_pattern("foundry.toml", ".git"),
+  settings = {
+    solidity = {
+      includePath = '',
+      remappings = {
+        ["@openzeppelin/"] = "lib/openzeppelin-contracts/",
+        ["account-abstraction/"] = "lib/account-abstraction/"
+      }
+    }
+  }
+}))
 
-require("lspconfig").gopls.setup(config({
+lspconfig.cssls.setup(config())
+
+lspconfig.gopls.setup(config({
   cmd = { "gopls", "serve" },
   settings = {
     gopls = {
@@ -157,7 +194,7 @@ require("lspconfig").gopls.setup(config({
       usePlaceholders = true,
     },
   },
-  on_attach = function(_,bufnr)
+  on_attach = function(_, bufnr)
     -- Call the local on_attach logic
     config().on_attach()
 
@@ -169,7 +206,7 @@ require("lspconfig").gopls.setup(config({
 }))
 
 -- who even uses this?
-require("lspconfig").rust_analyzer.setup(config({
+lspconfig.rust_analyzer.setup(config({
   cmd = { "rustup", "run", "nightly", "rust-analyzer" },
   --[[
     settings = {
@@ -182,7 +219,7 @@ require("lspconfig").rust_analyzer.setup(config({
     --]]
 }))
 
-require("lspconfig").lua_ls.setup(config({
+lspconfig.lua_ls.setup(config({
   settings = {
     Lua = {
       runtime = {
@@ -205,6 +242,74 @@ require("lspconfig").lua_ls.setup(config({
     },
   },
 }))
+
+local solhint = require("efmls-configs.linters.solhint")
+local prettier_d = require("efmls-configs.formatters.prettier_d")
+local luacheck = require("efmls-configs.linters.luacheck")
+local stylua = require("efmls-configs.formatters.stylua")
+local flake8 = require("efmls-configs.linters.flake8")
+local black = require("efmls-configs.formatters.black")
+local eslint = require("efmls-configs.linters.eslint")
+local fixjson = require("efmls-configs.formatters.fixjson")
+local shellcheck = require("efmls-configs.linters.shellcheck")
+local shfmt = require("efmls-configs.formatters.shfmt")
+local hadolint = require("efmls-configs.linters.hadolint")
+local cpplint = require("efmls-configs.linters.cpplint")
+local clangformat = require("efmls-configs.formatters.clang_format")
+
+-- configure efm server
+lspconfig.efm.setup({
+  filetypes = {
+    "solidity",
+    "lua",
+    "python",
+    "json",
+    "jsonc",
+    "sh",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte",
+    "vue",
+    "markdown",
+    "docker",
+    "html",
+    "css",
+    "c",
+    "cpp",
+  },
+  init_options = {
+    documentFormatting = true,
+    documentRangeFormatting = true,
+    hover = true,
+    documentSymbol = true,
+    codeAction = true,
+    completion = true,
+  },
+  settings = {
+    languages = {
+      solidity = { solhint, prettier_d },
+      lua = { luacheck, stylua },
+      python = { flake8, black },
+      typescript = { eslint, prettier_d },
+      json = { eslint, fixjson },
+      jsonc = { eslint, fixjson },
+      sh = { shellcheck, shfmt },
+      javascript = { eslint, prettier_d },
+      javascriptreact = { eslint, prettier_d },
+      typescriptreact = { eslint, prettier_d },
+      svelte = { eslint, prettier_d },
+      vue = { eslint, prettier_d },
+      markdown = { prettier_d },
+      docker = { hadolint, prettier_d },
+      html = { prettier_d },
+      css = { prettier_d },
+      c = { clangformat, cpplint },
+      cpp = { clangformat, cpplint },
+    },
+  },
+})
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -248,20 +353,26 @@ require("luasnip.loaders.from_vscode").lazy_load({
   exclude = {},
 })
 
-require("mason-null-ls").setup({
-  ensure_installed = { "black", "eslint" }
-})
+-- require("mason-null-ls").setup({
+--   ensure_installed = { "black", "eslint", "prettier_d", "solhint" },
+--   automatic_installation = true,
+-- })
 
-local null_ls = require("null-ls")
+-- local null_ls = require("null-ls")
 
-null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.golangci_lint,
-    null_ls.builtins.formatting.black,
-    -- null_ls.builtins.code_actions.eslint_d,
-    -- null_ls.builtins.code_actions.eslint
-  },
-})
+-- null_ls.setup({
+--   sources = {
+--     null_ls.builtins.diagnostics.golangci_lint,
+--     null_ls.builtins.formatting.black,
+--     null_ls.builtins.diagnostics.solhint,
+--     null_ls.builtins.formatting.prettierd.with({
+--       filetypes = { "solidity", "javascript", "typescript", "css", "html", "json" }
+--     })
+--     -- null_ls.builtins.code_actions.eslint_d,
+--     -- null_ls.builtins.code_actions.eslint
+--   },
+--   debug = true,
+-- })
 
 -- cleras the lightbulb
 require('lspsaga').setup({ ui = { enable = false, code_action = "" } })
