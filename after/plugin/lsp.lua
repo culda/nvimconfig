@@ -104,6 +104,10 @@ local function config(_config)
       nnoremap("gi", function() vim.lsp.buf.references() end)
       nnoremap("<leader>rn", function() vim.lsp.buf.rename() end)
       inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
+
+      nnoremap("<leader>li", function()
+        require("lint").try_lint()
+      end)
     end,
   }, _config or {})
 end
@@ -117,7 +121,8 @@ require("mason-lspconfig").setup {
     "solidity",
     "solidity_ls",
     "efm",
-    "jsonls"
+    "jsonls",
+    "golangci_lint_ls"
   },
   automatic_installation = true,
 }
@@ -376,3 +381,20 @@ require("luasnip.loaders.from_vscode").lazy_load({
 
 -- cleras the lightbulb
 require('lspsaga').setup({ ui = { enable = false, code_action = "" } })
+
+require("lint").linters_by_ft = {
+  javascript = { "eslint_d" },
+  typescript = { "eslint_d" },
+  vue = { "eslint_d" },
+  go = { "golangcilint" },
+}
+
+-- local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+-- Uncomment the following lines to enable automatic linting on certain events
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+--   group = lint_augroup,
+--   callback = function()
+--     require("lint").try_lint()
+--   end,
+-- })

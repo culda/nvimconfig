@@ -22,6 +22,7 @@ return {
     lazy = false,
   },
   {
+    'mfussenegger/nvim-lint',
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
   },
