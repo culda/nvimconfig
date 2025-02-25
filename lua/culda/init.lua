@@ -41,9 +41,7 @@ require('ibl').setup()
 
 require('go').setup()
 
-require('avante').setup({
-  provider = "openai"
-})
+-- require('avante').setup()
 
 require('culda.llm.llm').setup({
   -- How long to wait for the request to start returning data.

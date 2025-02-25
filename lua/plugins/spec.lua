@@ -121,6 +121,26 @@ return {
     event = "VeryLazy",
     build = "make",
     opts = {
+      provider = "claude",
+      cursor_applying_provider = 'groq',
+      behaviour = {
+        enable_cursor_planning_mode = true,
+      },
+      rag_service = {
+        enabled = true, -- Enables the rag service, requires OPENAI_API_KEY to be set
+      },
+      file_selector = {
+        provider = "fzf",
+      },
+      vendors = {
+        groq = {
+          __inherited_from = 'openai',
+          api_key_name = 'GROQ_API_KEY',
+          endpoint = 'https://api.groq.com/openai/v1/',
+          model = 'llama-3.3-70b-versatile',
+          max_tokens = 32768, -- remember to increase this value, otherwise it will stop generating halfway
+        },
+      },
     },
     dependencies = {
       "stevearc/dressing.nvim",
@@ -128,7 +148,9 @@ return {
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",      -- for providers='copilot'
+      "nvim-telescope/telescope.nvim",
+      "hrsh7th/nvim-cmp",
+      "ibhagwan/fzf-lua",
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",

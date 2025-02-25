@@ -121,6 +121,8 @@ require("mason-lspconfig").setup {
     "solidity",
     "solidity_ls",
     "efm",
+    "ts_ls",
+    "templ",
     "jsonls",
     "golangci_lint_ls"
   },
@@ -132,11 +134,11 @@ lspconfig.pyright.setup(config())
 lspconfig.zls.setup(config())
 
 lspconfig.ts_ls.setup(config({
-  init_options = {
-    preferences = {
-      importModuleSpecifierPreference = 'non-relative',
-    }
-  },
+  -- init_options = {
+  --   preferences = {
+  --     importModuleSpecifierPreference = 'non-relative',
+  --   }
+  -- },
 }))
 
 lspconfig.eslint.setup(config({
