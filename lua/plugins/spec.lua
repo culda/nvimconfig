@@ -173,6 +173,11 @@ return {
         'MeanderingProgrammer/render-markdown.nvim',
         opts = {
           file_types = { "markdown", "Avante" },
+          paragraph = {
+            left_margin = 0,
+            indent = 0,
+            min_width = 0
+          }
         },
         ft = { "markdown", "Avante" },
       },
