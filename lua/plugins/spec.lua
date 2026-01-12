@@ -7,6 +7,20 @@ return {
     },
   },
 
+  -- Neo-tree: show hidden files by default
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+      },
+    },
+  },
+
   -- Git
   {
     "FabijanZulj/blame.nvim",
@@ -27,11 +41,32 @@ return {
       },
     },
   },
+  {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = "Octo",
+    opts = {},
+  },
 
   -- Supermaven (AI completion)
   {
     "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
     opts = {},
+  },
+
+  -- Format on save
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      format_on_save = {
+        timeout_ms = 3000,
+        lsp_fallback = true,
+      },
+    },
   },
 }
