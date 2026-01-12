@@ -7,7 +7,15 @@ return {
     },
   },
 
-  -- Neo-tree: show hidden files by default
+  -- Disable snacks explorer (new LazyVim default)
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+    },
+  },
+
+  -- Neo-tree: use as default file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
