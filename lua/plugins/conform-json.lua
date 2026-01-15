@@ -2,7 +2,13 @@ return {
   "stevearc/conform.nvim",
   opts = {
     formatters_by_ft = {
-      json = false,
+      json = { "jq" },
+    },
+    formatters = {
+      jq = {
+        command = "jq",
+        args = { "." },
+      },
     },
   },
 }
