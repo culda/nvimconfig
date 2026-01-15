@@ -7,26 +7,20 @@ return {
     },
   },
 
-  -- Disable snacks explorer (new LazyVim default)
+  -- Snacks explorer: use as default file explorer
   {
     "folke/snacks.nvim",
     opts = {
-      explorer = { enabled = false },
+      explorer = {
+        enabled = true,
+      },
     },
   },
 
-  -- Neo-tree: use as default file explorer
+  -- Neo-tree: disabled in favor of snacks explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      filesystem = {
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = false,
-        },
-      },
-    },
+    enabled = false,
   },
 
   -- Git
