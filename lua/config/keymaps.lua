@@ -38,7 +38,7 @@ map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Tmux 
 
 -- Format
 map("n", "<leader>f", function()
-  vim.lsp.buf.format({ timeout_ms = 5000 })
+  require("conform").format({ timeout_ms = 5000, lsp_fallback = true })
 end, { desc = "Format buffer" })
 
 -- Quickfix navigation
