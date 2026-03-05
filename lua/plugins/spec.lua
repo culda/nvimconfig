@@ -13,6 +13,15 @@ return {
     opts = {
       explorer = {
         enabled = true,
+        replace_netrw = true,
+      },
+      picker = {
+        sources = {
+          explorer = {
+            hidden = true,
+            ignored = true,
+          },
+        },
       },
     },
   },
