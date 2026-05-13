@@ -23,7 +23,7 @@ return {
           },
           files = {
             hidden = true,
-            ignored = true,
+            ignored = false,
           },
         },
       },
